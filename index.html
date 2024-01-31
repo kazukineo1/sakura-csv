@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>CSV Encoder</title>
+</head>
+<body>
+  <input type="file" id="fileInput" />
+  <button id="convertButton">Convert CSV</button>
+
+  <script>
+    document.getElementById('convertButton').addEventListener('click', async () => {
+      console.log('Button clicked!');
+
+      const fileInput = document.getElementById('fileInput');
+      const filePath = fileInput.files[0]?.path;
+
+      if (filePath) {
+        try {
+          // サーバーにCSV変換のリクエストを送信
+          const result = await window.api.invoke('convert-csv', filePath);
+          alert(`CSV converted successfully!\nSaved to: ${result}`);
+        } catch (error) {
+          console.error(error);
+          alert(`Conversion failed:\n${error}`);
+        }
+      } else {
+        alert('Please select a CSV file.');
+      }
+    });
+  </script>
+</body>
+</html>
